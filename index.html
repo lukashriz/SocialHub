@@ -1,237 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SocialHub | Lukáš Hriž</title>
-    <!-- Favicon -->
-    <link rel="icon" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%2310b981%22>SH</text></svg>">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#10b981',
-                        secondary: '#34d399',
-                        dark: '#0f172a'
-                    }
-                }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard | Lukáš Hriž</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#e0f2e9',
+              100: '#c8e6d9',
+              200: '#a8d8b9',
+              300: '#8ac9a0',
+              400: '#6ab097',
+              500: '#4a9985',
+              600: '#3a7d6a',
             }
+          },
+          borderRadius: {
+            '4xl': '2rem'
+          }
         }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            color: #1f2937;
-        }
-        .post-card {
-            transition: all 0.3s ease;
-            border: 1px solid #e5e7eb;
-        }
-        .post-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(16, 181, 129, 0.2);
-            border-color: #10b981;
-        }
-        .like-btn {
-            transition: all 0.2s ease;
-        }
-        .like-btn.liked {
-            color: #ef4444;
-        }
-        .comment-input {
-            border-top: 1px solid #e5e7eb;
-        }
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #10b981, #34d399);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-        .notification-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: #ef4444;
-            color: white;
-            font-size: 0.6rem;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f9fbfa 0%, #edf6f2 100%);
+      color: #1f2937;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(209, 213, 219, 0.6);
+      box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.06);
+      border-radius: 1.75rem;
+      padding: 1.5rem;
+    }
+
+    .weather-card {
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-radius: 1.5rem;
+      overflow: hidden;
+    }
+
+    .weather-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px -10px rgba(74, 153, 133, 0.25);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4a9985, #3a7d6a);
+      color: white;
+      border-radius: 1rem;
+      padding: 0.6rem 1.25rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(74, 153, 133, 0.3);
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(74, 153, 133, 0.4);
+    }
+
+    .btn-outline {
+      background: #f8fafc;
+      color: #4a9985;
+      border: 1px solid #dbe7e2;
+      border-radius: 1rem;
+      padding: 0.6rem 1.25rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline:hover {
+      background: #f0fdf4;
+      border-color: #a8d8b9;
+    }
+
+    .example-city {
+      background: #f0fdf4;
+      border: 1px solid #dcfce7;
+      border-radius: 9999px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .example-city:hover {
+      background: #dcfce7;
+      transform: translateY(-2px);
+    }
+
+    .loading {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(74, 153, 133, 0.3);
+      border-radius: 50%;
+      border-top-color: #4a9985;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 1rem;
+      z-index: 10;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      margin-top: 0.5rem;
+    }
+
+    .suggestion-item {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .suggestion-item:hover {
+      background: #f0fdf4;
+    }
+  </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen py-8">
+
+  <div class="max-w-4xl mx-auto px-4">
     <!-- Header -->
-    <header class="bg-white shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
-                        <span class="text-white font-bold text-lg">SH</span>
-                    </div>
-                    <h1 class="text-2xl font-bold text-gray-800">SocialHub</h1>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="relative">
-                        <i class="fas fa-bell text-gray-600 text-xl cursor-pointer"></i>
-                        <span class="notification-badge">3</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <div class="avatar">LH</div>
-                        <span class="font-medium text-gray-800 hidden sm:inline">Lukáš Hriž</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <header class="text-center mb-10">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 text-white mb-4 shadow-lg">
+        <i class="fas fa-cloud-sun"></i>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-1">Weather Dashboard</h1>
+      <p class="text-gray-600">by Lukáš Hriž</p>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 py-8">
-        <div class="flex gap-8">
-            <!-- Left Sidebar -->
-            <div class="w-1/4 hidden lg:block">
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="avatar">LH</div>
-                        <div>
-                            <p class="font-medium text-gray-800">Lukáš Hriž</p>
-                            <p class="text-sm text-gray-600">@lukashriz</p>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors">
-                            <i class="fas fa-home"></i>
-                            <span>Home</span>
-                        </a>
-                        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors">
-                            <i class="fas fa-user-friends"></i>
-                            <span>Friends</span>
-                        </a>
-                        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors">
-                            <i class="fas fa-bookmark"></i>
-                            <span>Saved</span>
-                        </a>
-                        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Feed -->
-            <div class="flex-1">
-                <!-- Create Post -->
-                <div class="bg-white rounded-xl shadow-sm p-6 mb-6 border border-emerald-100">
-                    <div class="flex gap-4">
-                        <div class="avatar">LH</div>
-                        <div class="flex-1">
-                            <textarea 
-                                id="post-content" 
-                                placeholder="What's on your mind, Lukáš?" 
-                                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-                                rows="3"
-                            ></textarea>
-                            <div class="flex justify-between items-center mt-4">
-                                <div class="flex gap-2 text-gray-600">
-                                    <button class="hover:text-primary transition-colors">
-                                        <i class="fas fa-image"></i>
-                                    </button>
-                                    <button class="hover:text-primary transition-colors">
-                                        <i class="fas fa-video"></i>
-                                    </button>
-                                    <button class="hover:text-primary transition-colors">
-                                        <i class="fas fa-smile"></i>
-                                    </button>
-                                </div>
-                                <button 
-                                    id="post-btn" 
-                                    class="bg-primary hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300"
-                                >
-                                    Post
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Posts Feed -->
-                <div id="posts-container" class="space-y-6">
-                    <!-- Posts will be loaded here dynamically -->
-                </div>
-            </div>
-
-            <!-- Right Sidebar -->
-            <div class="w-1/4 hidden lg:block">
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100 mb-6">
-                    <h3 class="font-bold text-gray-800 mb-4">Trending Topics</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">#WebDevelopment</span>
-                            <span class="text-gray-500 text-sm">2.4K posts</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">#JavaScript</span>
-                            <span class="text-gray-500 text-sm">1.8K posts</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">#TailwindCSS</span>
-                            <span class="text-gray-500 text-sm">956 posts</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">#FullStack</span>
-                            <span class="text-gray-500 text-sm">742 posts</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
-                    <h3 class="font-bold text-gray-800 mb-4">Suggestions For You</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-blue-600"></div>
-                                <div>
-                                    <p class="text-sm font-medium text-gray-800">Alex Morgan</p>
-                                    <p class="text-xs text-gray-600">Follows you</p>
-                                </div>
-                            </div>
-                            <button class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full transition-colors">
-                                Follow
-                            </button>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-400 to-purple-600"></div>
-                                <div>
-                                    <p class="text-sm font-medium text-gray-800">Sarah Johnson</p>
-                                    <p class="text-xs text-gray-600">Web Developer</p>
-                                </div>
-                            </div>
-                            <button class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full transition-colors">
-                                Follow
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Main Card -->
+    <main class="glass-card">
+      <!-- Search -->
+      <div class="relative mb-6">
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-1">
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Enter city name (Prague, New York...)"
+              class="w-full px-4 py-3.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary-400 focus:border-transparent outline-none"
+            />
+            <div id="suggestions" class="suggestions hidden"></div>
+          </div>
+          <button id="search-btn" class="btn-primary flex items-center justify-center gap-2">
+            <i class="fas fa-search"></i> Search
+          </button>
+          <button id="location-btn" class="btn-outline flex items-center justify-center gap-2">
+            <i class="fas fa-location-dot"></i> My Location
+          </button>
         </div>
+
+        <div class="mt-4">
+          <p class="text-sm text-gray-600 mb-2">Try these cities:</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="example-city" data-city="Prague">Prague</span>
+            <span class="example-city" data-city="New York">New York</span>
+            <span class="example-city" data-city="Paris">Paris</span>
+            <span class="example-city" data-city="Tokyo">Tokyo</span>
+            <span class="example-city" data-city="Sydney">Sydney</span>
+            <span class="example-city" data-city="London">London</span>
+            <span class="example-city" data-city="Berlin">Berlin</span>
+            <span class="example-city" data-city="Rome">Rome</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div id="loading" class="hidden text-center py-10">
+        <div class="loading mx-auto mb-4"></div>
+        <p class="text-gray-600">Fetching weather data...</p>
+      </div>
+
+      <!-- Error -->
+      <div id="error" class="hidden bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+        <i class="fas fa-exclamation-triangle text-red-500 text-2xl mb-2"></i>
+        <p id="error-message" class="text-red-700 font-medium">City not found. Please try again.</p>
+      </div>
+
+      <!-- Weather Display -->
+      <div id="weather-display" class="hidden">
+        <!-- Current -->
+        <div class="weather-card bg-white p-6 mb-8 border border-emerald-100">
+          <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+              <h2 id="city-name" class="text-2xl md:text-3xl font-bold text-gray-800 mb-1">Prague</h2>
+              <p id="date-time" class="text-gray-600 mb-4">Monday, January 1, 2024</p>
+              <div class="flex items-center justify-center md:justify-start gap-4">
+                <div class="text-center">
+                  <i id="weather-icon" class="fas fa-sun text-4xl md:text-5xl text-yellow-500 mb-2"></i>
+                  <p id="weather-description" class="text-gray-600 capitalize">Sunny</p>
+                </div>
+                <div>
+                  <p id="temperature" class="text-4xl md:text-5xl font-bold text-gray-800">22°</p>
+                  <p id="feels-like" class="text-gray-600">Feels like 24°</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 text-center">
+              <div><p class="text-sm text-gray-600">Humidity</p><p id="humidity" class="text-lg font-semibold text-gray-800">65%</p></div>
+              <div><p class="text-sm text-gray-600">Wind</p><p id="wind-speed" class="text-lg font-semibold text-gray-800">12 km/h</p></div>
+              <div><p class="text-sm text-gray-600">Pressure</p><p id="pressure" class="text-lg font-semibold text-gray-800">1013 hPa</p></div>
+              <div><p class="text-sm text-gray-600">Visibility</p><p id="visibility" class="text-lg font-semibold text-gray-800">10 km</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Forecast -->
+        <div class="bg-white rounded-xl p-6 border border-emerald-100">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">5-Day Forecast</h3>
+          <div id="forecast" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"></div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="text-center py-10">
+        <div class="inline-block p-4 bg-primary-50 rounded-full mb-4">
+          <i class="fas fa-cloud-sun text-3xl text-primary-500"></i>
+        </div>
+        <p class="text-lg font-medium text-gray-700">Search for a city or use your current location</p>
+        <p class="text-gray-500 mt-1">to get real-time weather information</p>
+        <p class="mt-3 text-sm text-gray-600">Try: <span class="font-medium">Prague, New York, Paris, Tokyo, Sydney</span></p>
+      </div>
     </main>
 
-    <script>
+    <!-- GitHub Footer -->
+    <footer class="mt-10 text-center">
+      <a
+        href="https://github.com/lukashriz/weather-app"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-50 hover:bg-gray-100 text-gray-700 font-medium rounded-xl border border-gray-200 transition-all hover:shadow-sm"
+      >
+        <i class="fab fa-github text-lg"></i>
+        View on GitHub
+      </a>
+    </footer>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
         // Simple utility to get initials from name
         function getInitials(name) {
             return name.split(' ').map(n => n[0]).join('').toUpperCase();
@@ -460,3 +502,11 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
